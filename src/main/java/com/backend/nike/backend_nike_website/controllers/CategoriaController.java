@@ -13,6 +13,7 @@ public class CategoriaController extends BaseController<Categoria, Integer> {
     @Autowired
     private CategoriaServiceImpl categoriaServiceImpl;
 
+    // Constructor que pasa el servicio al controlador base
     public CategoriaController(CategoriaServiceImpl categoriaServiceImpl) {
         super(categoriaServiceImpl);
     }

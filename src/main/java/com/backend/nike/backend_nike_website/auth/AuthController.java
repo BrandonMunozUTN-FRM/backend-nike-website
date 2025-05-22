@@ -1,4 +1,4 @@
-package com.backend.nike.backend_nike_website.Auth;
+package com.backend.nike.backend_nike_website.auth;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,13 +17,13 @@ public class AuthController {
 
     @PostMapping(value = "login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
-        // Lógica de autenticación
+        // devuelve los datos de autenticación si todo sale bien
         return ResponseEntity.ok(authService.login(request));
     }
 
     @PostMapping(value = "register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
-        // Lógica de registro
+        // devuelve los datos del usuario registrado
         return ResponseEntity.ok(authService.register(request));
     }
 }

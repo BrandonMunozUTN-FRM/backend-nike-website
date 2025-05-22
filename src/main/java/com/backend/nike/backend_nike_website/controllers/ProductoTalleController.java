@@ -16,51 +16,69 @@ public class ProductoTalleController {
     @Autowired
     private ProductoTalleService productoTalleService;
 
+    // Devuelve todos los ProductoTalle que hay
     @GetMapping("")
     public ResponseEntity<?> getAll() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(productoTalleService.findAll());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"" + e.getMessage() + "\"}");
+            // Si falla, devuelve error con el mensaje
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
         }
     }
 
+    // Devuelve un ProductoTalle según sus IDs (talle y producto)
     @GetMapping("/{idTalle}/{idProducto}")
     public ResponseEntity<?> getOne(@PathVariable Integer idTalle, @PathVariable Integer idProducto) {
         try {
             ProductoTalleId id = new ProductoTalleId(idTalle, idProducto);
             return ResponseEntity.status(HttpStatus.OK).body(productoTalleService.findById(id));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"" + e.getMessage() + "\"}");
+            // Si no lo encuentra o hay error, devuelve error
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
         }
     }
 
+    // Guarda un nuevo ProductoTalle
     @PostMapping("")
     public ResponseEntity<?> save(@RequestBody ProductoTalle entity) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(productoTalleService.save(entity));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"" + e.getMessage() + "\"}");
+            // Si falla al guardar, devuelve error con el mensaje
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
         }
     }
 
+    // Actualiza un ProductoTalle existente según sus IDs
     @PutMapping("/{idTalle}/{idProducto}")
-    public ResponseEntity<?> update(@PathVariable Integer idTalle, @PathVariable Integer idProducto, @RequestBody ProductoTalle entity) {
+    public ResponseEntity<?> update(@PathVariable Integer idTalle, @PathVariable Integer idProducto,
+            @RequestBody ProductoTalle entity) {
         try {
             ProductoTalleId id = new ProductoTalleId(idTalle, idProducto);
             return ResponseEntity.status(HttpStatus.OK).body(productoTalleService.update(id, entity));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"" + e.getMessage() + "\"}");
+            // Devuelve error si no pudo actualizar
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
         }
     }
 
+    // Elimina un ProductoTalle según sus IDs
     @DeleteMapping("/{idTalle}/{idProducto}")
     public ResponseEntity<?> delete(@PathVariable Integer idTalle, @PathVariable Integer idProducto) {
         try {
             ProductoTalleId id = new ProductoTalleId(idTalle, idProducto);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(productoTalleService.delete(id));
+            productoTalleService.delete(id);
+            // Responde con 204 si se eliminó correctamente
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"" + e.getMessage() + "\"}");
+            // Devuelve error si hubo problema al eliminar
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
         }
     }
 }

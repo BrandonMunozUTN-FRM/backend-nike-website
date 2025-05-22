@@ -28,11 +28,14 @@ public class Revision implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    // Identificador único de la revisión, generado automáticamente con secuencia
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "revision_seq_gen")
     @SequenceGenerator(name = "revision_seq", sequenceName = "rbac.seq.revision_id")
     @RevisionNumber
     private int id;
+
+    // Fecha y hora en que se hizo la revisión
     @Column(name = "REVISION_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     @RevisionTimestamp

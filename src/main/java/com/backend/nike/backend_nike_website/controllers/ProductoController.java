@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path = "api/categoriasproductos")
+@RequestMapping(path = "api/productos")
 public class ProductoController extends BaseController<Producto, Integer> {
 
     @Autowired
     private ProductoServiceImp productoServiceImp;
 
+    // Constructor para pasar el servicio al controlador base
     public ProductoController(ProductoServiceImp productoServiceImp) {
         super(productoServiceImp);
     }
@@ -26,10 +27,11 @@ public class ProductoController extends BaseController<Producto, Integer> {
     @GetMapping("/search")
     public ResponseEntity<?> search(@RequestParam String filtro, Pageable pageable) {
         try {
+            // Busca productos según el filtro y con paginación
             return ResponseEntity.status(HttpStatus.OK).body(productoServiceImp.search(filtro, pageable));
         } catch (Exception e) {
+            // Devuelve error 404 si no encuentra o hay problema
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("error", e.getMessage()));
         }
     }
-
 }

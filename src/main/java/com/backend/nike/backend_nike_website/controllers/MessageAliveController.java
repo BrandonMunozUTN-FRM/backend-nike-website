@@ -1,19 +1,19 @@
 package com.backend.nike.backend_nike_website.controllers;
 
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/demo")
+@RequestMapping("/api/message-alive")
 @RequiredArgsConstructor
-public class DemoController {
+public class MessageAliveController {
 
-    @PostMapping(value = "demo")
-    public String sayHello() {
-        return "Hello World";
+    @GetMapping
+    public String message() {
+        return "Estamos vivos";
     }
 
 }

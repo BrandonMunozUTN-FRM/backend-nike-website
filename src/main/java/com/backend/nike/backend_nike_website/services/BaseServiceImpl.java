@@ -15,19 +15,24 @@ import com.backend.nike.backend_nike_website.repositories.BaseRepository;
 import jakarta.transaction.Transactional;
 
 public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> implements BaseService<E, ID> {
-    protected BaseRepository<E, ID> baseRepository;
     
+    protected BaseRepository<E, ID> baseRepository;
+
     public BaseServiceImpl(BaseRepository<E, ID> baseRepository) {
         this.baseRepository = baseRepository;
     }
 
+    /**
+     * Devuelve todos los registros de la entidad.
+     * Lanza excepción si no hay resultados.
+     */
     @Override
     @Transactional
     public List<E> findAll() throws Exception {
         try {
             List<E> entities = baseRepository.findAll();
             if (entities.isEmpty()) {
-                throw new Exception("No se encontró el recurso solicitado");
+                throw new Exception("Sin resultados obtenidos");
             }
             return entities;
         } catch (Exception e) {
@@ -35,13 +40,17 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
         }
     }
 
+    /**
+     * Devuelve una página con registros de la entidad.
+     * Lanza excepción si no hay resultados.
+     */
     @Override
     @Transactional
     public Page<E> findAll(Pageable pageable) throws Exception {
         try {
             Page<E> entities = baseRepository.findAll(pageable);
             if (entities.isEmpty()) {
-                throw new Exception("No se encontró el recurso solicitado");
+                throw new Exception("Sin resultados obtenidos");
             }
             return entities;
         } catch (Exception e) {
@@ -49,6 +58,10 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
         }
     }
 
+    /**
+     * Busca una entidad por su ID.
+     * Lanza excepción si no existe.
+     */
     @Override
     @Transactional
     public E findById(ID id) throws Exception {
@@ -63,28 +76,25 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
         }
     }
 
+    /**
+     * Guarda una nueva entidad.
+     */
     @Override
     @Transactional
     public E save(E entity) throws Exception {
         try {
             return baseRepository.save(entity);
         } catch (Exception e) {
-            e.printStackTrace();  // <--- esto mostrará la excepción real en consola/log
+            e.printStackTrace();
             throw new Exception(e.getMessage());
         }
     }
 
-    /*
-    @Override
-    @Transactional
-    public E save(E entity) throws Exception {
-        try {
-            return baseRepository.save(entity);
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
-        }
-    }
-*/
+    /**
+     * Actualiza una entidad existente buscando por ID.
+     * Mantiene la fecha de creación original.
+     * Lanza excepción si no existe la entidad.
+     */
     @Override
     @Transactional
     public E update(ID id, E entity) throws Exception {
@@ -103,6 +113,10 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
         }
     }
 
+    /**
+     * Elimina una entidad por su ID.
+     * Devuelve true si se eliminó correctamente, sino lanza excepción.
+     */
     @Override
     @Transactional
     public boolean delete(ID id) throws Exception {
@@ -117,5 +131,4 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
             throw new Exception(e.getMessage());
         }
     }
-    
 }

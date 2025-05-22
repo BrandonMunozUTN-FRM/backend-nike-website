@@ -24,25 +24,30 @@ public class ApplicationConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        // devuelve el AuthenticationManager configurado por Spring
         return config.getAuthenticationManager();
     }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        // indicamos cómo cargar usuarios
         authenticationProvider.setUserDetailsService(userDetailsService());
+        // indicamos cómo se codifican las contraseñas
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
+        // busca un usuario por nombre, o lanza error si no existe
         return usuario -> usuarioRepository.findByUsuario(usuario)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario not found"));
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+        // usamos bcrypt para encriptar contraseñas
         return new BCryptPasswordEncoder();
     }
 }

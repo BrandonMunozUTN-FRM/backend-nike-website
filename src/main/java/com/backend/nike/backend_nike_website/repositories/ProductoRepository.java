@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @RepositoryRestResource(path = "categoriasproductos")
 public interface ProductoRepository extends BaseRepository<Producto, Integer> {
 
-    // Busca categoriasproductos por nombre o descripcion - ej.
+    // Método para buscar productos filtrando por nombre o descripción, con soporte de paginación
     @Query("SELECT p FROM Producto p WHERE p.name LIKE %:filtro% OR p.descripcion LIKE %:filtro%")
     Page<Producto> search(@Param("filtro") String filtro, Pageable pageable);
 
