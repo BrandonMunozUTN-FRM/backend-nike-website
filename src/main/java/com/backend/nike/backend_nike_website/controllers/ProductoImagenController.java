@@ -13,6 +13,7 @@ public class ProductoImagenController extends BaseController<ProductoImagen, Int
     @Autowired
     private ProductoImagenServiceImpl productoImagenServiceImpl;
 
+    // Constructor que pasa el service al controlador base
     public ProductoImagenController(ProductoImagenServiceImpl productoImagenServiceImpl) {
         super(productoImagenServiceImpl);
     }

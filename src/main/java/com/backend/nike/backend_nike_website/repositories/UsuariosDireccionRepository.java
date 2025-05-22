@@ -15,9 +15,11 @@ import org.springframework.stereotype.Repository;
 @RepositoryRestResource(path = "usuarioAddresses")
 public interface UsuariosDireccionRepository extends JpaRepository<UsuariosDireccion, UsuariosDireccionId> {
 
+    // Busca todas las direcciones asociadas a un usuario específico
     @RestResource(path = "byUsuario")
     List<UsuariosDireccion> findByUsuarioId(@Param("usuarioId") Integer usuarioId);
 
+    // Busca todas las relaciones que tengan una dirección específica
     @RestResource(path = "byDireccion")
     List<UsuariosDireccion> findByDireccionId(@Param("direccionId") Integer direccionId);
 }

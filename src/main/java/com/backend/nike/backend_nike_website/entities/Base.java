@@ -22,21 +22,26 @@ import java.time.ZonedDateTime;
 @Setter
 public class Base implements Serializable {
 
+    // ID autogenerado para cada entidad
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Immutable //esto hace que -NO- se pueda modificar una vez se crea
+    // Fecha y hora de creación, se guarda solo una vez y no cambia
+    @Immutable
     private LocalDateTime createdAt;
 
+    // Fecha y hora de la última actualización
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    // Antes de guardar por primera vez, asigna la fecha y hora actual de Buenos Aires
     @PrePersist
     public void prePersist() {
         this.createdAt = ZonedDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires")).toLocalDateTime();
     }
 
+    // Antes de actualizar, actualiza la fecha y hora con el momento actual de Buenos Aires
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = ZonedDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires")).toLocalDateTime();

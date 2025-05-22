@@ -16,6 +16,7 @@ public class ProductoDescuentoController {
     @Autowired
     private ProductoDescuentoService productoDescuentoService;
 
+    // Trae todos los descuentos de productos
     @GetMapping("")
     public ResponseEntity<?> getAll() {
         try {
@@ -25,6 +26,7 @@ public class ProductoDescuentoController {
         }
     }
 
+    // Trae un descuento específico por ids de descuento y producto
     @GetMapping("/{idDescuento}/{idProducto}")
     public ResponseEntity<?> getOne(@PathVariable Integer idDescuento, @PathVariable Integer idProducto) {
         try {
@@ -35,6 +37,7 @@ public class ProductoDescuentoController {
         }
     }
 
+    // Guarda un nuevo descuento para producto
     @PostMapping("")
     public ResponseEntity<?> save(@RequestBody ProductoDescuento entity) {
         try {
@@ -44,6 +47,7 @@ public class ProductoDescuentoController {
         }
     }
 
+    // Actualiza un descuento existente
     @PutMapping("/{idDescuento}/{idProducto}")
     public ResponseEntity<?> update(@PathVariable Integer idDescuento, @PathVariable Integer idProducto, @RequestBody ProductoDescuento entity) {
         try {
@@ -54,6 +58,7 @@ public class ProductoDescuentoController {
         }
     }
 
+    // Elimina un descuento específico
     @DeleteMapping("/{idDescuento}/{idProducto}")
     public ResponseEntity<?> delete(@PathVariable Integer idDescuento, @PathVariable Integer idProducto) {
         try {
@@ -64,6 +69,7 @@ public class ProductoDescuentoController {
         }
     }
 
+    // Trae todos los descuentos para un producto específico
     @GetMapping("/byProducto/{idProducto}")
     public ResponseEntity<?> getByProducto(@PathVariable Integer idProducto) {
         try {

@@ -13,10 +13,12 @@ import java.util.Optional;
 
 @Service
 public class ProductoTalleService {
-    
+
+    // Inyectamos el repositorio que maneja ProductoTalle
     @Autowired
     private ProductoTalleRepository productoTalleRepository;
-    
+
+    // Método para obtener todos los registros de ProductoTalle
     @Transactional
     public List<ProductoTalle> findAll() throws Exception {
         try {
@@ -25,17 +27,19 @@ public class ProductoTalleService {
             throw new Exception(e.getMessage());
         }
     }
-    
+
+    // Método para obtener un registro por su ID compuesto
     @Transactional
     public ProductoTalle findById(ProductoTalleId id) throws Exception {
         try {
             Optional<ProductoTalle> entityOptional = productoTalleRepository.findById(id);
-            return entityOptional.get();
+            return entityOptional.get(); // Puede lanzar NoSuchElementException si no existe
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }
-    
+
+    // Método para guardar un nuevo registro
     @Transactional
     public ProductoTalle save(ProductoTalle entity) throws Exception {
         try {
@@ -45,7 +49,8 @@ public class ProductoTalleService {
             throw new Exception(e.getMessage());
         }
     }
-    
+
+    // Método para actualizar un registro existente
     @Transactional
     public ProductoTalle update(ProductoTalleId id, ProductoTalle entity) throws Exception {
         try {
@@ -53,14 +58,18 @@ public class ProductoTalleService {
             if (!entityOptional.isPresent()) {
                 throw new Exception("No se encontró el registro con id: " + id);
             }
+
             ProductoTalle productoTalle = entityOptional.get();
+            // Copiamos propiedades excepto las claves (idTalle e idProducto)
             BeanUtils.copyProperties(entity, productoTalle, "idTalle", "idProducto");
+
             return productoTalle;
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }
-    
+
+    // Método para eliminar un registro por su ID
     @Transactional
     public boolean delete(ProductoTalleId id) throws Exception {
         try {
@@ -74,4 +83,4 @@ public class ProductoTalleService {
             throw new Exception(e.getMessage());
         }
     }
-} 
+}

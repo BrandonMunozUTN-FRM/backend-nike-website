@@ -1,4 +1,4 @@
-package com.backend.nike.backend_nike_website.Auth;
+package com.backend.nike.backend_nike_website.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,12 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class LoginRequest {
 
     String usuario;
     String password;
-    String name;
-    String lastName;
-    String email;
-    String rol;
+
 }

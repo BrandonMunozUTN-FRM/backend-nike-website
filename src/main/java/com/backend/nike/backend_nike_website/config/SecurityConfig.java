@@ -9,7 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.backend.nike.backend_nike_website.Jwt.JwtAuthenticationFilter;
+import com.backend.nike.backend_nike_website.jwt.JwtAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,14 +24,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                // desactivo CSRF porque usamos JWT y no sesiones
                 .csrf(csrf -> csrf.disable())
+                // configuro qué URLs pueden acceder sin estar autenticado
                 .authorizeHttpRequests(authRequest
                         -> authRequest
-                        .requestMatchers("/auth/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/auth/**").permitAll() // login y registro abiertos
+                        .anyRequest().authenticated() // el resto requiere autenticación
                 )
+                // no usamos sesiones, cada request debe traer el token
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // configuro el proveedor de autenticación
                 .authenticationProvider(authProvider)
+                // agrego el filtro para validar JWT antes del filtro de login
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

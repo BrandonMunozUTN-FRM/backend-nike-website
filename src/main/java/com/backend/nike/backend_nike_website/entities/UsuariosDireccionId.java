@@ -13,10 +13,13 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UsuariosDireccionId implements Serializable {
 
+    // ID del usuario
     private Integer usuarioId;
+
+    // ID de la dirección
     private Integer direccionId;
 
-    // Equals and hashCode methods
+    // Compara si dos objetos son iguales, considerando ambos IDs
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -34,6 +37,7 @@ public class UsuariosDireccionId implements Serializable {
         return direccionId.equals(that.direccionId);
     }
 
+    // Genera un código hash basado en ambos IDs para uso en colecciones
     @Override
     public int hashCode() {
         int result = usuarioId.hashCode();

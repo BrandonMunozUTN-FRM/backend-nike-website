@@ -1,4 +1,4 @@
-package com.backend.nike.backend_nike_website.Auth;
+package com.backend.nike.backend_nike_website.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
+public class AuthResponse {
 
-    String usuario;
-    String password;
-
+    String token; // token JWT que se devuelve al cliente
 }

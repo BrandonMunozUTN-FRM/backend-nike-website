@@ -42,9 +42,9 @@ public class CompraOden extends Base {
     private Status estado;
 
     public enum Status {
-        PENDING,
-        PAID,
-        CANCELLED
+        PENDIENTE,
+        PAGADO,
+        CANCELADO
     }
 
     @ManyToOne
