@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import org.hibernate.envers.Audited;
+
 
 @Entity
 @Table(name = "categoriasproductos")
@@ -18,7 +18,6 @@ import org.hibernate.envers.Audited;
 @AllArgsConstructor
 @Getter
 @Setter
-@Audited
 public class Producto extends Base {
 
     @Column(name = "name")
@@ -33,14 +32,12 @@ public class Producto extends Base {
     @Column(name = "imagen")
     private String imagen;
 
+
     @Column(name = "categoria_id")
     private Integer categoriaId;
 
     @Column(name = "color")
     private short color;
-
-    @Column(name = "marca")
-    private short marca;
 
     @Column(name = "estado")
     private boolean estado;

@@ -14,7 +14,7 @@ import lombok.Setter;
 import java.util.Collection;
 import java.util.List;
 
-import org.hibernate.envers.Audited;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +25,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @Getter
 @Setter
-@Audited
 @Builder
 public class Usuario extends Base implements UserDetails {
 

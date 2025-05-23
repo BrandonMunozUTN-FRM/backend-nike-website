@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import org.hibernate.envers.Audited;
+
 
 @Entity
 @Table(name = "type")
@@ -16,7 +16,6 @@ import org.hibernate.envers.Audited;
 @AllArgsConstructor
 @Getter
 @Setter
-@Audited
 public class Type extends Base {
 
     @Column(name = "name")

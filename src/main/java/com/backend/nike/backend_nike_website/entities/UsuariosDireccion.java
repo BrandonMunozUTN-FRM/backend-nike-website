@@ -14,7 +14,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
-import org.hibernate.envers.Audited;
+
 
 @Entity
 @Table(name = "usuario_direcciones")
@@ -22,7 +22,6 @@ import org.hibernate.envers.Audited;
 @AllArgsConstructor
 @Getter
 @Setter
-@Audited
 @IdClass(UsuariosDireccionId.class)
 public class UsuariosDireccion implements Serializable {
 
