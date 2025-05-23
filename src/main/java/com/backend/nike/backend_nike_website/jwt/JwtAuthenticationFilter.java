@@ -33,7 +33,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String token = getTokenFromRequest(request);
         final String usuario;
 
-        // Si no hay token, dejamos pasar la petición sin autenticación
         if (token == null) {
             filterChain.doFilter(request, response);
             return;
