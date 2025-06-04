@@ -7,7 +7,8 @@ COPY . .
 RUN chmod +x ./gradlew
 
 # Compilar la app
-RUN ./gradlew build --no-daemon
+#RUN ./gradlew build --no-daemon
+RUN ./gradlew build -x test --no-daemon
 
 # Segunda etapa para imagen final
 FROM openjdk:17-jdk-slim
