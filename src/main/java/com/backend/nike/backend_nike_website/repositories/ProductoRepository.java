@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface ProductoRepository extends BaseRepository<Producto, Integer> {
 
     // Método para buscar productos filtrando por nombre o descripción, con soporte de paginación
-    @Query("SELECT p FROM Producto p WHERE p.name LIKE %:filtro% OR p.descripcion LIKE %:filtro%")
+    @Query("SELECT p FROM Producto p WHERE p.nombre LIKE %:filtro% OR p.descripcion LIKE %:filtro%")
     Page<Producto> search(@Param("filtro") String filtro, Pageable pageable);
 
 }
