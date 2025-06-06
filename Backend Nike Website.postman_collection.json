@@ -516,44 +516,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Editar Talle",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"numero\": 38\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/api/talles/4",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"talles",
-								"4"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -594,7 +556,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"usuario\": \"pepe1\",\r\n    \"password\": \"111111\"\r\n}\r\n",
+							"raw": "{\r\n    \"usuario\": \"pepe12\",\r\n    \"password\": \"1111112\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1073,13 +1035,14 @@
 							"raw": "{\n    \"link\": \"https://ejemplo.com/nike.jpg\",\n    \"productoId\": 3\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/ordenes",
+							"raw": "{{baseUrl}}/api/ordenes/18",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
-								"ordenes"
+								"ordenes",
+								"18"
 							]
 						}
 					},
@@ -1102,7 +1065,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"fecha\": \"2025-06-05T18:00:00\",\n    \"estado\": \"PAGADO\",\n    \"usuario\": {\n        \"id\": 1\n    },\n    \"items\": [\n        {\n            \"producto\": {\n                \"id\": 2\n            },\n            \"cantidad\": 2,\n            \"precioUnitario\": 599.99\n        }\n    ]\n}",
+							"raw": "{\n  \"fechaCompra\": \"2025-06-06\",\n  \"estado\": \"PENDIENTE\",\n  \"productos\": [\n    {\n      \"id\": 2\n    }\n  ]\n}   \n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1155,6 +1118,92 @@
 								"api",
 								"ordenes",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mercado Pago",
+			"item": [
+				{
+					"name": "Generar orden MP",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": [\n        2\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pay/mp",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pay",
+								"mp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar estado",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": [\n        2\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pay/update-status/18?nuevoEstado=APROBADO",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pay",
+								"update-status",
+								"18"
+							],
+							"query": [
+								{
+									"key": "nuevoEstado",
+									"value": "APROBADO"
+								}
 							]
 						}
 					},
@@ -1221,7 +1270,7 @@
 		},
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwZXBlMTIiLCJpYXQiOjE3NDkxNzE1MjgsImV4cCI6MTc0OTI1NzkyOH0.TBZEwH5QtIEmqph5HgbITXVVS-hEUC1EJ9FsVlXxRtg",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwZXBlMTIiLCJpYXQiOjE3NDkyMTQ0NjgsImV4cCI6MTc0OTMwMDg2OH0.n90s_LNkk6xJRMBmcdxxMlFM2GUjuFuNV7BkxaChppU",
 			"type": "string"
 		}
 	]
