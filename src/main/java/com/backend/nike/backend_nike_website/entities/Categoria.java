@@ -19,8 +19,8 @@ import lombok.Setter;
 @Setter
 public class Categoria extends Base {
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "nombre")
+    private String nombre;
 
     @Column(name = "type_id")
     private Integer typeId;

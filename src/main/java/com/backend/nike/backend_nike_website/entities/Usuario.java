@@ -53,7 +53,10 @@ public class Usuario extends Base implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(rol.name()));
+        if (rol == null) {
+            return List.of(new SimpleGrantedAuthority("ROLE_CLIENT"));
+        }
+        return List.of(new SimpleGrantedAuthority("ROLE_" + rol.name()));
     }
 
     @Override

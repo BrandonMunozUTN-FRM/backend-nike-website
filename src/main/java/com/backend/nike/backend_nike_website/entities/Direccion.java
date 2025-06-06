@@ -21,6 +21,9 @@ public class Direccion extends Base {
     @Column(name = "calle")
     private String calle;
 
+    @Column(name = "numero")
+    private String numero;
+
     @Column(name = "ciudad")
     private String ciudad;
 
