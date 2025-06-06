@@ -1,34 +1,32 @@
 package com.backend.nike.backend_nike_website.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 
 @Entity
-@Table(name = "ordenes_compra")
-@NoArgsConstructor
+@Table(name = "orden_compra")
+@Data
 @AllArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor
+@Builder
 public class OrdenCompra extends Base {
 
-    @Column(name = "fecha")
-    private LocalDateTime fecha;
+    private Double total;
 
-    @Column(name = "estado")
+    private LocalDate fechaCompra;
+
     private String estado;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
-
-    @OneToMany(mappedBy = "ordenCompra", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<ItemOrden> items;
-
+    @ManyToMany
+    @JsonIgnoreProperties("ordenCompras")
+    @JoinTable(
+            name = "orden_compra_detalle",
+            joinColumns = @JoinColumn(name = "orden_compra_id"),
+            inverseJoinColumns = @JoinColumn(name = "producto_id")
+    )
+    private List<Producto> productos;
 }
