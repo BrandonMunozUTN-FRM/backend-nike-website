@@ -32,9 +32,6 @@ public class Producto extends Base {
     @Column(name = "categoria_id")
     private Integer categoriaId;
 
-    @Column(name = "color")
-    private short color;
-
     @Column(name = "estado")
     private boolean estado;
 

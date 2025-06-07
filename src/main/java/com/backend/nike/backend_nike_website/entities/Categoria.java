@@ -21,11 +21,4 @@ public class Categoria extends Base {
 
     @Column(name = "nombre")
     private String nombre;
-
-    @Column(name = "type_id")
-    private Integer typeId;
-
-    @ManyToOne
-    @JoinColumn(name = "type_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Type type;
 }

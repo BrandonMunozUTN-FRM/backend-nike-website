@@ -34,4 +34,20 @@ public class ProductoController extends BaseController<Producto, Integer> {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("error", e.getMessage()));
         }
     }
+
+    @DeleteMapping("/{id}")
+    @Override
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
+        try {
+            Producto producto = productoServiceImp.findById(id);
+
+            producto.setEstado(false);
+            productoServiceImp.save(producto);
+            return ResponseEntity.status(HttpStatus.OK).body("{\"message\": \"Eliminado Correctamente\"}");
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }
+
 }
