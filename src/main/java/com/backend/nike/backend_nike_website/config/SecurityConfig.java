@@ -26,16 +26,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-                // configuro qué URLs pueden acceder sin estar autenticado
-                .authorizeHttpRequests(authRequest
-                        -> authRequest
+                .authorizeHttpRequests(authRequest -> authRequest
                         .requestMatchers("/auth/**").permitAll() // login y registro abiertos
+                        .requestMatchers(HttpMethod.GET, "/api/productos/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/message-alive").permitAll()
                         .anyRequest().authenticated() // el resto requiere autenticación
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // configuro el proveedor de autenticación
                 .authenticationProvider(authProvider)
-                // agrego el filtro para validar JWT antes del filtro de login
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
