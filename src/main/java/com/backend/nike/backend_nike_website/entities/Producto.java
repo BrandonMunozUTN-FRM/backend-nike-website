@@ -38,6 +38,9 @@ public class Producto extends Base {
     @Column(name = "genero")
     private String genero;
 
+    @Column(name = "stock")
+    private Integer stock;
+
     @ManyToOne
     @JoinColumn(name = "categoria_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Categoria categoria;

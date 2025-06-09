@@ -46,28 +46,45 @@ public class OrdenCompraServiceImpl extends BaseServiceImpl<OrdenCompra, Integer
     }
 
 
-
     @Override
     @Transactional
     public OrdenCompra generarOrdenCompra(List<Long> ids) throws Exception {
         OrdenCompra orden = new OrdenCompra();
+        orden.setEstado("PENDIENTE");
+        orden.setFechaCompra(LocalDate.now());
 
-        List<Producto> productos = new ArrayList<>();
+        List<Producto> productosFinales = new ArrayList<>();
+        double total = 0.0;
 
+        var cantidadPorProducto = new java.util.HashMap<Long, Integer>();
         for (Long id : ids) {
-            Producto producto = productoRepository.findById(Math.toIntExact(id))
-                    .orElseThrow(() -> new Exception("Producto no encontrado con ID: " + id));
-            productos.add(producto);
+            cantidadPorProducto.put(id, cantidadPorProducto.getOrDefault(id, 0) + 1);
         }
 
-        orden.setProductos(productos);
-        orden.setEstado("PENDIENTE");
-        orden.setFechaCompra(LocalDate.from(LocalDateTime.now()));
+        for (var entry : cantidadPorProducto.entrySet()) {
+            Long productoId = entry.getKey();
+            Integer cantidad = entry.getValue();
 
-        OrdenCompra ordenGuardada = this.save(orden);
+            Producto producto = productoRepository.findById(Math.toIntExact(productoId))
+                    .orElseThrow(() -> new Exception("Producto no encontrado con ID: " + productoId));
 
-        return ordenGuardada;
+            if (producto.getStock() == null || producto.getStock() < cantidad) {
+                throw new Exception("Stock insuficiente para el producto: " + producto.getNombre());
+            }
+
+            producto.setStock(producto.getStock() - cantidad);
+            productoRepository.save(producto);
+
+            for (int i = 0; i < cantidad; i++) {
+                productosFinales.add(producto);
+            }
+
+            total += producto.getPrecio() * cantidad;
+        }
+
+        orden.setProductos(productosFinales);
+        orden.setTotal(total);
+
+        return super.save(orden);
     }
-
-
 }
