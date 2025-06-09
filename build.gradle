@@ -33,6 +33,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation("com.mercadopago:sdk-java:2.4.0")
 
+	//CLOUDINARY
+	// https://mvnrepository.com/artifact/com.cloudinary/cloudinary
+	implementation 'com.cloudinary:cloudinary-http44:1.36.0'
+	implementation 'com.cloudinary:cloudinary-taglib:1.36.0'
+	implementation 'io.github.cdimascio:dotenv-java:2.2.4'
+
+
 	// MySQL
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
