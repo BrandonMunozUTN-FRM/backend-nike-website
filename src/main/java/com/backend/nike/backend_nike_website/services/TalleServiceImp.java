@@ -16,5 +16,4 @@ public class TalleServiceImp extends BaseServiceImpl<Talle, Integer> implements 
         super(baseRepository);
     }
 
-// Si querés métodos personalizados, los implementás acá
 }

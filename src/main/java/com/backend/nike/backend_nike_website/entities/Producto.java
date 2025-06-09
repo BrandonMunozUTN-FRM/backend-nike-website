@@ -32,14 +32,14 @@ public class Producto extends Base {
     @Column(name = "categoria_id")
     private Integer categoriaId;
 
-    @Column(name = "color")
-    private short color;
-
     @Column(name = "estado")
     private boolean estado;
 
     @Column(name = "genero")
     private String genero;
+
+    @Column(name = "stock")
+    private Integer stock;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id", referencedColumnName = "id", insertable = false, updatable = false)

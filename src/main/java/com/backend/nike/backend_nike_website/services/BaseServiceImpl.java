@@ -1,6 +1,7 @@
 package com.backend.nike.backend_nike_website.services;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -103,15 +104,20 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
             if (!entityOptional.isPresent()) {
                 throw new Exception("No se encontró el producto con id: " + id);
             }
+
             E entityToUpdate = entityOptional.get();
             LocalDateTime createdAt = entityToUpdate.getCreatedAt();
-            BeanUtils.copyProperties(entity, entityToUpdate, "id", "createdAt");
+
+            copyNonNullProperties(entity, entityToUpdate);
+
             entityToUpdate.setCreatedAt(createdAt);
+
             return baseRepository.save(entityToUpdate);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }
+
 
     /**
      * Elimina una entidad por su ID.
@@ -131,4 +137,20 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
             throw new Exception(e.getMessage());
         }
     }
+
+    private void copyNonNullProperties(E source, E target) {
+        for (Field field : source.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            try {
+                Object value = field.get(source);
+                if (value != null && !field.getName().equals("id") && !field.getName().equals("createdAt")) {
+                    field.set(target, value);
+                }
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException("Error copiando propiedades", e);
+            }
+        }
+    }
+
 }
+

@@ -30,6 +30,7 @@ public class MercadoPagoController {
     @PostMapping("/mp")
     @CrossOrigin("*")
     public ResponseEntity<Map<String, Object>> mp( @RequestBody Map<String, List<Long>> body) throws Exception {
+        try {
         List<Long> ids = body.get("id");
         MercadoPagoConfig.setAccessToken(mercadoPagoAccessToken);
         List<PreferenceItemRequest> items = new ArrayList<>();
@@ -92,7 +93,11 @@ public class MercadoPagoController {
         response.put("orden", ordenCompra);
         return ResponseEntity.ok(response);
 
-
+    } catch (Exception e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("error", e.getMessage()));
+    }
 
     }
     @PatchMapping("/update-status/{ordenId}")
