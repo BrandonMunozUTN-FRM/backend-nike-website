@@ -28,7 +28,6 @@ public class MercadoPagoController {
     private String mercadoPagoAccessToken;
 
     @PostMapping("/mp")
-    @CrossOrigin("*")
     public ResponseEntity<Map<String, Object>> mp( @RequestBody Map<String, List<Long>> body) throws Exception {
         try {
         List<Long> ids = body.get("id");

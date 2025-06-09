@@ -12,7 +12,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/images") // Mapeo raíz para todas las rutas dentro del controlador
-@CrossOrigin("*") // Permite solicitudes desde cualquier origen (CORS)
 public class ImageController {
 
     @Autowired

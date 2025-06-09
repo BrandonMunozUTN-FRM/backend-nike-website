@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("api/ordenes")
 public class OrdenCompraController extends BaseController<OrdenCompra, Integer> {
 
