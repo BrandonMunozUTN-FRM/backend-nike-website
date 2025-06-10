@@ -43,7 +43,7 @@ public class AuthService {
                 .email(request.getEmail())
                 .usuario(request.getUsuario())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .rol(Usuario.UsuarioRole.CLIENT) // asigna rol por defecto
+                .rol(Usuario.UsuarioRole.valueOf(request.getRol())) // asigna rol por defecto
                 .build();
 
         // guarda el usuario en la base de datos

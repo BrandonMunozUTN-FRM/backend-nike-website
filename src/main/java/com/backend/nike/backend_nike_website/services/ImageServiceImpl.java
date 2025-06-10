@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -75,7 +76,11 @@ public class ImageServiceImpl implements ImageService {
             }
 
             // Convertir la lista de URLs a un objeto JSON y devolver como ResponseEntity con estado OK (200)
-            return new ResponseEntity<>("{\"status\":\"OK\", \"urls\":" + urls + "}", HttpStatus.OK);
+            String json = "{\"status\":\"OK\", \"urls\":[" +
+                    urls.stream().map(url -> "\"" + url + "\"").collect(Collectors.joining(",")) +
+                    "]}";
+            return new ResponseEntity<>(json, HttpStatus.OK);
+
 
         } catch (Exception e) {
             e.printStackTrace();
