@@ -2,27 +2,36 @@ package com.backend.nike.backend_nike_website.services;
 
 import com.backend.nike.backend_nike_website.entities.OrdenCompra;
 import com.backend.nike.backend_nike_website.entities.Producto;
+import com.backend.nike.backend_nike_website.entities.Usuario;
+import com.backend.nike.backend_nike_website.jwt.JwtAuthenticationFilter;
 import com.backend.nike.backend_nike_website.repositories.OrdenCompraRepository;
 import com.backend.nike.backend_nike_website.repositories.ProductoRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import com.backend.nike.backend_nike_website.repositories.UsuarioRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
 public class OrdenCompraServiceImpl extends BaseServiceImpl<OrdenCompra, Integer> implements OrdenCompraService {
 
     private final OrdenCompraRepository ordenCompraRepository;
     private final ProductoRepository productoRepository;
+    private final UsuarioRepository usuarioRepository;
+
 
     public OrdenCompraServiceImpl(OrdenCompraRepository ordenCompraRepository,
-                                  ProductoRepository productoRepository) {
+                                  ProductoRepository productoRepository, UsuarioRepository usuarioRepository) {
         super(ordenCompraRepository);
         this.ordenCompraRepository = ordenCompraRepository;
         this.productoRepository = productoRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
@@ -49,9 +58,20 @@ public class OrdenCompraServiceImpl extends BaseServiceImpl<OrdenCompra, Integer
     @Override
     @Transactional
     public OrdenCompra generarOrdenCompra(List<Long> ids) throws Exception {
+
+        String username = ((UserDetails) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal())
+                .getUsername();
+
+        Usuario usuario = usuarioRepository.findByUsuario(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
         OrdenCompra orden = new OrdenCompra();
         orden.setEstado("PENDIENTE");
         orden.setFechaCompra(LocalDate.now());
+        orden.setUsuario(usuario); // 🟢 Asignar el usuario a la orden
 
         List<Producto> productosFinales = new ArrayList<>();
         double total = 0.0;

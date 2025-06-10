@@ -29,4 +29,9 @@ public class OrdenCompra extends Base {
             inverseJoinColumns = @JoinColumn(name = "producto_id")
     )
     private List<Producto> productos;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    @JsonIgnoreProperties("ordenesCompra")
+    private Usuario usuario;
 }
