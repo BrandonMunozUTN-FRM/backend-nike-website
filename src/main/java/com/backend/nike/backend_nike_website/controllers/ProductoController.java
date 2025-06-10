@@ -41,6 +41,7 @@ public class ProductoController extends BaseController<Producto, Integer> {
             Producto producto = productoServiceImp.findById(id);
 
             producto.setEstado(false);
+            producto.setStock(0);
             productoServiceImp.save(producto);
             return ResponseEntity.status(HttpStatus.OK).body("{\"message\": \"Eliminado Correctamente\"}");
 
