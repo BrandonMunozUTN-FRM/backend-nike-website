@@ -21,6 +21,8 @@ public class OrdenCompra extends Base {
 
     private String estado;
 
+    private String preferenceId;
+
     @ManyToMany
     @JsonIgnoreProperties("ordenCompras")
     @JoinTable(

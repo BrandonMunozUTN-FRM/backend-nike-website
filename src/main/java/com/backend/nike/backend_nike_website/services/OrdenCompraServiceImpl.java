@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -107,4 +108,10 @@ public class OrdenCompraServiceImpl extends BaseServiceImpl<OrdenCompra, Integer
 
         return super.save(orden);
     }
+
+    @Override
+    public Optional<OrdenCompra> findByPreferenceId(String preferenceId) {
+        return ordenCompraRepository.findByPreferenceId(preferenceId);
+    }
 }
+

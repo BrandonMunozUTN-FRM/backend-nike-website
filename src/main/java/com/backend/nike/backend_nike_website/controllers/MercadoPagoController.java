@@ -13,10 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/pay")
@@ -85,6 +82,8 @@ public class MercadoPagoController {
 
 
         String prefId = preference.getId();
+            ordenCompra.setPreferenceId(prefId);
+            ordenCompraService.save(ordenCompra);  // Guardar la orden actualizada
 
         Map<String, Object> response = new HashMap<>();
         response.put("preferenceId", prefId);
@@ -120,5 +119,31 @@ public class MercadoPagoController {
                     .body("Error actualizando el estado: " + e.getMessage());
         }
     }
+
+    @PatchMapping("/update-status/preference/{preferenceId}")
+    @CrossOrigin("*")
+    public ResponseEntity<?> actualizarEstadoPorPreferenceId(
+            @PathVariable String preferenceId,
+            @RequestParam String nuevoEstado) {
+
+        try {
+            Optional<OrdenCompra> ordenOptional = ordenCompraService.findByPreferenceId(preferenceId);
+
+            if (ordenOptional.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Orden no encontrada con preferenceId: " + preferenceId);
+            }
+
+            OrdenCompra orden = ordenOptional.get();
+            orden.setEstado(nuevoEstado);
+            ordenCompraService.save(orden);
+
+            return ResponseEntity.ok("Estado actualizado correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error actualizando el estado: " + e.getMessage());
+        }
+    }
+
 
 }
