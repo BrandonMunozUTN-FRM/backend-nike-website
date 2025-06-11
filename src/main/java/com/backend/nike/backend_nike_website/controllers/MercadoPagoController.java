@@ -99,7 +99,6 @@ public class MercadoPagoController {
 
     }
     @PatchMapping("/update-status/{ordenId}")
-    @CrossOrigin("*")
     public ResponseEntity<?> actualizarEstadoOrden(
             @PathVariable Integer ordenId,
             @RequestParam String nuevoEstado) {
@@ -121,7 +120,6 @@ public class MercadoPagoController {
     }
 
     @PatchMapping("/update-status/preference/{preferenceId}")
-    @CrossOrigin("*")
     public ResponseEntity<?> actualizarEstadoPorPreferenceId(
             @PathVariable String preferenceId,
             @RequestParam String nuevoEstado) {
